@@ -37,3 +37,7 @@ The dragging functionality was the toughest part! Since this is quite a custom f
 #### What could you have done better with more time?
 - The drag functionality isn't as accurate when it's zoomed out to anything more than 3 months. With a smaller amount of data points, the drag functionality is able to capture the two points well, but when it's a significant amount of data points, it struggles with this.
 - I wanted to add a dropdown list to choose a different stock other than AAPL. Alas, the drag functionality took a bit longer than anticipated.
+
+#### 4. From a scale of 1 (not strong) -5 (work of art), how would you rate yourself on each of these categories on this project? 
+    1. Code structure and cleanliness. 4/5
+    2. Execution and completion. 4/5
