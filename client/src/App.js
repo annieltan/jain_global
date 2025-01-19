@@ -15,7 +15,7 @@ export default function App() {
   console.log('rendering')
 
   useEffect(() => {
-    fetch(`https://jain-global.onrender.com/historical-prices/${activeStock}`).then(
+    fetch(`https://jain-global.onrender.com/api/v1/historical-prices/${activeStock}`).then(
     res => res.json()
     ).then(
     data => {

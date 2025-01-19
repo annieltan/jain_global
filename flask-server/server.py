@@ -20,7 +20,7 @@ US_EXCHANGES = [
 
 app = Flask(__name__)
 stocks_bp = Blueprint('stocks', __name__, url_prefix='/api/v1')
-CORS(app, resources={r"/api/v1/*": {"origins": "https://jg-o41q.onrender.com/"}})
+CORS(app)
 
 
 @stocks_bp.route("/stocks", methods=['GET'])
