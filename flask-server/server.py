@@ -19,7 +19,7 @@ US_EXCHANGES = [
 ]
 
 app = Flask(__name__)
-CORS(app) 
+CORS(app, origins=["https://jg-o41q.onrender.com/"]) 
 
 
 @app.route("/stocks", methods=['GET'])
