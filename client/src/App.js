@@ -76,12 +76,10 @@ export default function App() {
         if (rightToLeft && (xValue > midpoint && xValue < next.x)) {
           setEnd(next)
           setDelta((next.y - start.y).toFixed(2))
-          console.log('past midpoint', next)
           break
         } else if (!rightToLeft && (xValue < midpoint && xValue > current.x)) {
           setEnd(current)
           setDelta((current.y - start.y).toFixed(2))
-          console.log('past midpoint left to right', current)
           break
         } else {
           setEnd({x: xAxis.toValue(event.clientX)})

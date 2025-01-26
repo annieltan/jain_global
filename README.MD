@@ -40,5 +40,9 @@ The dragging functionality was the toughest part! Since this is quite a custom f
 - Better styling/CSS!
 
 #### 4. From a scale of 1 (not strong) -5 (work of art), how would you rate yourself on each of these categories on this project? 
-    1. Code structure and cleanliness. 4/5
-    2. Execution and completion. 4/5
+1. Code structure and cleanliness. 4/5
+2. Completion and polish. 4/5
+3. Execution and velocity. 4/5 & 3/5 (thanks for your patience!)
+
+##### Could you explain why you elected to stand up your own backend instead of hitting the services directly?
+During local development, I had my front-end hit my Python Flask backend by adding a proxy to my package.json file. But while looking for free deployment options, I came across Render and was having a hard time getting it to work with just one service. The forums suggested that two separate services would be best -- one for a backend, one for a front-end.
