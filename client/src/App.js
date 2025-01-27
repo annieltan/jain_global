@@ -58,7 +58,7 @@ export default function App() {
       const isRightToLeft = (xValue > startDrag.x)
 
       // Logic to mimic the default tooltip behavior
-      // i.e. the end of the rectangle follows the tooltip
+      // i.e. the end of the rectangle follows the tooltip behavior
       for (let i = 0; i < chartData.length - 1; i++) {
         const current = chartData[i]
 
