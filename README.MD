@@ -1,48 +1,70 @@
 ## Set Up
 
-### Backend (Flask)
+### Backend Setup (Flask)
+You can copy and paste this into your terminal:
 ```
-1. cd into `flask-server`
-2. create a venv if it doesn't already exist: `python3 -m venv venv`
-3. activate your venv: `source venv/bin/activate`
-4. run `pip install flask`
-5. run `python3 server.py` to run the server on port 5000
+cd flask-server
 
-Note: You will need your own .env file with your API_KEY. You will also need to run `pip install dotenv` if you plan on loading in the .env file.
+# create and activate venv if it doesn't already exist
+python3 -m venv venv; source venv/bin/activate
+
+pip install -r requirements.txt
+
+python3 server.py
 ```
 
-### Frontend (create-react-app)
+Note: You will need your own .env file with your API_KEY.
 ```
-1. cd into `client`
-2. run `npm start` and it should open http://localhost:3000 in your browser
+echo "API_KEY={YOUR_API_KEY}" > .env | cat .env
 ```
+
+### Frontend Setup (Create-React-App)
+You can copy and paste this into your terminal:
+```
+cd client;
+npm install;
+npm start
+```
+This will open http://localhost:3000 in your browser.
 
 #### Some technical decisions or tradeoffs you made.
-A technical decision I made was how best to structure the data fetched from FMP. I decided that this structure would be best:
+I decided to structure the FMP data like so:
 ```
-{'open': [
-    ['test_date', 'test_price'], ['test_date_2', 'test_price_2']],
- 'close': [
-    [...], [...], [...]],
- ...
- }
+{
+   'open': [
+      ['test_date', 'test_open_price'], 
+      ['test_date_2', 'test_open_price_2']
+   ],
+   'close': [
+      ['test_date', 'test_close_price'], 
+      ['test_date_2', 'test_close_price_2'],
+   ...
+}
+```
+The ellipses after the 'open' and 'close' objects will contain:
+```
+keys: high, low, adjustedClose, volume, unadjustedVolume, change
+values: either a list of prices, # of shares or percentage
+```
+This is because the graph changes when the price type changes. Keying by graph type allows direct access to price/shares/percentage data.
 
- This is because the graph changes when the price type changes, so it made most sense to make that easily accessible by key and the price data as values.
-```
 #### What challenges did you run into?
-The dragging functionality was the toughest part! Since this is quite a custom feature that Highcharts doesn't fully support, it took a bit of researching and documentation reading to get the feature fully working. Highcharts has a feature that allows you to drag your cursor to highlight a selection area but it automatically zooms in. I ended up using this to get the drag & highlight feature but I removed the zoom-ins and used a selection event to plot the delta. Some issues that I ran into while getting this to work:
-- Using chartOptions as a state variable wasn't working as expected. Prior to making this change, chart options was a constant variable and the graph loaded as expected after choosing a price type from the dropdown. But once I tried to use this as a state variable -- simply doing something like `const [chartOptions, setChartOptions] = useState(options)` -- the graph did not render properly. This was a beginner mistake on my end! I was updating the activePriceType state variable, but not the chartOptions state variable. Somehow I thought that chartOptions would be updated as well, but not the case!
-- Perhaps a bit more interesting was that after I got the delta and plotbands to work, I noticed that upon the initial render after choosing a price type from the dropdown, Highcharts graph would show up but _without_ the data points. However, if I changed it to Open (or another price type) right after, data points showed up. The issue was that I was updating both state variables activePriceType and chartOptions in the same render, which doesn't work because chartOptions is dependent on activePriceType. This meant that in the queue, I was replacing the activePriceType to 'Close' and then replacing chartOptions with an object that viewed activePriceType as an empty string (default value). Instead, I used 'useEffect' to have it perform a re-render to update chartOptions whenever activePriceType changes. It can be argued that this isn't as performant since we have to rerender every time activePriceType changes.
+The dragging functionality was the toughest part! I originally used the zoom feature that Highcharts provides for the original submission, but this time around, I removed that entirely to use custom mouse down, mouse over and mouse up events.
+
+Challenges from the original submission:
+- The initial render after choosing a quote type from the dropdown would show the graph _without_ the data points. But if I changed it to a different quote type from the dropdown, data points showed up. The problem was updating both state variables `activeQuoteType` and `chartOptions` in the same render. This doesn't work because `chartOptions` is dependent on `activeQuoteType`. This meant that in the render queue, I was replacing the `activeQuoteType` to something like 'Close' and then replacing `chartOptions` with an object that viewed `activeQuoteType` as an empty string (the default value). To resolve this, I used 'useEffect' to have it perform a re-render to update `chartOptions` whenever `activeQuoteType` changes.
+
+Challenges from the second submission:
    
 #### What could you have done better with more time?
-- The drag functionality isn't as accurate when it's zoomed out to anything more than 3 months. With a smaller amount of data points, the drag functionality is able to capture the two points well, but when it's a significant amount of data points, it struggles with this.
-- I wanted to add a dropdown list to choose a different stock other than AAPL. Alas, the drag functionality took a bit longer than anticipated.
-- Better styling/CSS!
+- A freeform textbox or dropdown allowing users to query other tickers.
+- Improved UI styling. Use a CSS preprocessor (i.e. Sass) when styling gets more complex.
+- Instead of triggering a re-render when `activeQuoteType` changes to update `chartOptions`, I can use an updater function so that everything is updated on the same render.
 
-#### 4. From a scale of 1 (not strong) -5 (work of art), how would you rate yourself on each of these categories on this project? 
-1. Code structure and cleanliness. 4/5
+#### From a scale of 1 (not strong) -5 (work of art), how would you rate yourself on each of these categories on this project? 
+1. Code structure and cleanliness. 5/5
 2. Completion and polish. 4/5
-3. Execution and velocity. 4/5 & 3/5 (thanks for your patience!)
+3. Execution and velocity. 4/5 & 3/5
 
 ##### Could you explain why you elected to stand up your own backend instead of hitting the services directly?
-During local development, I had my front-end hit my Python Flask backend by adding a proxy to my package.json file. But while looking for free deployment options, I came across Render and was having a hard time getting it to work with just one service. The forums suggested that two separate services would be best -- one for a backend, one for a front-end.
+During local development, I had my frontend hit my Python Flask backend by adding a proxy to my package.json file. But while looking for free deployment options, I came across Render and had difficulty getting it to run running with a single service. Further research determined that two separate services would be best -- one for a backend, one for a frontend.
