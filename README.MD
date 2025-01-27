@@ -64,9 +64,9 @@ Challenges from the second submission:
 - Instead of triggering a re-render when `activeQuoteType` changes to update `chartOptions`, I can use an updater function to update both variables on the same render.
 
 #### From a scale of 1 (not strong) -5 (work of art), how would you rate yourself on each of these categories on this project? 
-1. Code structure and cleanliness. 5/5
-2. Completion and polish. 4/5
-3. Execution and velocity. 4/5 & 3/5
+1. Code structure and cleanliness. 5/5 | 5/5
+2. Completion and polish. 5/5 | 4.5/5
+3. Execution and velocity. 4/5 | 3/5
 
 #### Could you explain why you elected to stand up your own backend instead of hitting the services directly?
 During local development, I had my frontend hit my Python Flask backend by adding a proxy to my package.json file. But while looking for free deployment options, I came across Render and had difficulty getting it to run with a single service. Further research determined that two separate services would be best -- one for a backend, one for a frontend.
