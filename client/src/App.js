@@ -118,7 +118,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    fetch(`https://jg-o41q.onrender.com/api/v1/historical-prices/${activeStock}`).then(
+    fetch(`https://jain-global.onrender.com/api/v1/historical-prices/${activeStock}`).then(
     res => res.json()
     ).then(
     data => {

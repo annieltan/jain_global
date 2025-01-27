@@ -1,6 +1,6 @@
-## Set Up
+### Set Up
 
-### Backend Setup (Flask)
+#### Backend Setup (Flask)
 You can copy and paste this into your terminal:
 ```
 cd flask-server
@@ -18,7 +18,7 @@ Note: You will need your own .env file with your API_KEY.
 echo "API_KEY={YOUR_API_KEY}" > .env | cat .env
 ```
 
-### Frontend Setup (Create-React-App)
+#### Frontend Setup (Create-React-App)
 You can copy and paste this into your terminal:
 ```
 cd client;
@@ -27,6 +27,7 @@ npm start
 ```
 This will open http://localhost:3000 in your browser.
 
+### Responses
 #### Some technical decisions or tradeoffs you made.
 I decided to structure the FMP data like so:
 ```
