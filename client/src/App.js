@@ -132,18 +132,17 @@ export default function App() {
           unadjustedVolume: [],
           change: []
         }
+
         // reformat data
-        data['historical'].forEach(d => {
-          stockData['open'].push([d.date, d.open])
-          stockData['close'].push([d.date, d.close])
-          stockData['high'].push([d.date, d.high])
-          stockData['low'].push([d.date, d.low])
-          stockData['adjClose'].push([d.date, d.adjClose])
-          stockData['volume'].push([d.date, d.volume])
-          stockData['unadjustedVolume'].push([d.date, d.unadjustedVolume])
-          stockData['change'].push([d.date, d.change])
+        data['historical'].forEach(
+          d => {
+            Object.keys(stockData).forEach(
+              key => {
+                stockData[key].push([d.date, d[key]])
+          })
         })
-        // Highcharts requires data to be sorted
+        // Highcharts requires data to be sorted in ascending order
+        // FMP API is returned in descending order
         stockData['open'].sort()
         stockData['close'].sort()
         stockData['high'].sort()
