@@ -7,7 +7,7 @@ import HighchartsReact from 'highcharts-react-official'
 export default function App() {
   // Future version: add a dropdown or freeform text input to support other tickers.
   const [activeStock, setActiveStock] = useState('AAPL')
-  const [activeQuoteType, setPriceType] = useState(null)
+  const [activeQuoteType, setQuoteType] = useState('')
   const [prices, setPrices] = useState({})
   const [chartOptions, setChartOptions] = useState({})
 
@@ -201,7 +201,7 @@ export default function App() {
 
   const onPriceTypeSelect = (eventKey, event) => {
     event.preventDefault()
-    setPriceType(eventKey)
+    setQuoteType(eventKey)
   }
 
   // Update chartOptions after setting activeQuoteType
